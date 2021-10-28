@@ -1,0 +1,26 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "Evan's Blog",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EvanGrillo/blog.git"
+  },
+  "keywords": [
+    "Node",
+    "JavaScript"
+  ],
+  "author": "Evan Grillo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EvanGrillo/blog/issues"
+  },
+  "homepage": "https://github.com/EvanGrillo/blog#readme",
+  "dependencies": {
+    "mongodb": "^4.1.3"
+  }
+}

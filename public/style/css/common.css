@@ -1,0 +1,222 @@
+body {
+    margin: 0;
+    background: #f1f1f1;
+    font-family: Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    font-size: 14px
+}
+
+/*HELPERS*/
+
+.multi-el-container {
+    margin: 1em 0;
+    width: 100%;
+    display: flex;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+
+.section-gutter {
+    padding-left: 65px;
+    padding-right: 65px;
+}
+
+.center-el {
+    max-width:1272px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.display-grid {
+    display: grid;
+}
+
+.align-start {
+    align-items: flex-start;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-space-between {
+    justify-content: space-between;
+}
+
+.justify-space-around {
+    justify-content: space-around;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.display-flex.justify-between {
+    justify-content: space-between;
+}
+
+.display-flex.direction-column {
+    flex-direction: column;
+}
+
+.v-spacer-10 {
+    height: 100%;
+    width: 10px;
+}
+
+.v-spacer-20 {
+    height: 100%;
+    width: 20px;
+}
+
+.spacer-10 {
+    height: 10px;
+    width: 100%;
+}
+
+.spacer-20 {
+    height: 20px;
+    width: 100%;
+}
+
+.spacer-30 {
+    height: 30px;
+    width: 100%;
+}
+
+.spacer-40 {
+    height: 40px;
+    width: 100%;
+}
+
+.spacer-50 {
+    height: 50px;
+    width: 100%;
+}
+
+.spacer-60 {
+    height: 60px;
+    width: 100%;
+}
+
+.float-right {
+    margin: 0 0 0 auto !important;
+}
+
+.float-left {
+    margin: 0 auto 0 0 !important;
+}
+
+.mt-auto {
+    margin-top: auto;
+}
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.ma-auto {
+    margin: auto;
+}
+
+.ma-0 {
+    margin: 0 !important;
+}
+
+.ma-10 {
+    margin: 10px;
+}
+
+.my-10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.my-20 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.mx-10 {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.mx-20 {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.mr-10 {
+    margin-right: 10px;
+}
+
+.pa-10 {
+    padding: 10px;
+}
+
+.py-10 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.px-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.pl-0 {
+    padding-left: 0 !important;
+}
+
+.pr-0 {
+    padding-right: 0 !important;
+}
+
+/*HELPERS*/
