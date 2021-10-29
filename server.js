@@ -4,7 +4,8 @@ const path = require('path');
 const server = http.createServer(() => {});
 const port = process.env.PORT || 3000;
 const mimeTypes = require('./mimeTypes');
-let db = require('./db.js');
+const db = require('./db.js');
+const mailer = require('./email.js');
 
 connectToDB = async () => {
     try {
@@ -20,7 +21,7 @@ connectToDB().then(() => {
 
 server.on('request', (req, res) => {
 
-    let { url } = req;
+    let { method, url } = req;
 
     if ((/public/).test(url)) url = '.' + url;
 
@@ -31,7 +32,15 @@ server.on('request', (req, res) => {
 
     if ((/blog/.test(url)) && !(/style/).test(url)) {
         return renderBlog(res, `./public${url}`);
-    }``
+    }
+
+    if (method === 'POST' && (/send/).test(url)) return mailer.sendMessage(req, res);
+    
+    readFile(res, url);
+
+});
+
+readFile = async (res, url) => {
 
     let extname = path.extname(url);
     let contentType = mimeTypes[extname] || 'application/octet-stream';
@@ -46,7 +55,7 @@ server.on('request', (req, res) => {
         return sendError(err);
     }
 
-});
+}
 
 renderBlogs = async (res, url) => {
 
@@ -63,7 +72,7 @@ renderBlogs = async (res, url) => {
 
             let entry = blogPreviewTemplate
             .replace('[title]', blog.title)
-            .replaceAll('[titleLink]', blog.title.toLowerCase().split(' ').join('-'))
+            .replaceAll('[titleLink]', blog.handle)
             .replace('[createdDate]', blog.createdDate);
 
             blogPreviews = blogPreviews.concat(entry);
@@ -117,7 +126,7 @@ sendError = async (res, err) => {
     console.log("\x1b[31m", err, '>> sendError');
 
     if (err.code == 'ENOENT' || 'EISDIR') {
-        return res.end('<h1>404 Forbidden</h1>', 'utf-8');
+        return res.end('<h1>403 Forbidden</h1>', 'utf-8');
     }
     return res.end('<h1>500</h1>', 'utf-8');
 

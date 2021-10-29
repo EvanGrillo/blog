@@ -92,6 +92,10 @@ p {
     flex-direction: column;
 }
 
+.grow-1 {
+    flex: 1;
+}
+
 .v-spacer-10 {
     height: 100%;
     width: 10px;
@@ -133,11 +137,11 @@ p {
 }
 
 .float-right {
-    margin: 0 0 0 auto !important;
+    margin: 0 0 0 auto;
 }
 
 .float-left {
-    margin: 0 auto 0 0 !important;
+    margin: 0 auto 0 0;
 }
 
 .mt-auto {
@@ -200,14 +204,28 @@ p {
     padding: 10px;
 }
 
+.pa-20 {
+    padding: 20px;
+}
+
 .py-10 {
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
+.py-20 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 .px-10 {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.px-20 {
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 

@@ -8,48 +8,60 @@
         <script src='/public/index.js'></script>
     </head>
     <body>
-		<header>
-		</header>
-		<div class='container'>
-			<div class='content'>
-                <div class='blog-head'>Evan Grillo wrote...</div>
-                <div class='blogs'>[blogs]</div>
-            </div>
-			<div class='side-bar'>
-                <img class='ma-auto' alt='evan on vacation' width='100%' height='auto' src='/public/style/images/evan.png'>
-                <p class='my-10'>Hello, I'm Evan. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-                <div class='spacer-40'></div>
-                <div class='multi-container-el display-flex justify-space-around flex-wrap'>
-                    <div class='display-flex align-center'>
-                        <a target='_blank' href='https://github.com/EvanGrillo'>
-                            <img type='image/svg+xml' alt='Github Logo SVG' width='25' height='25' src='/public/style/svgs/github.svg'>
-                        </a>
-                        <div class='v-spacer-10'></div>
-                        <a target='_blank' href='https://github.com/EvanGrillo'>
-                            <p>Github</p>
-                        </a>
-                    </div>
-                    <div class='display-flex align-center'>
-                        <a target='_blank' href='https://github.com/EvanGrillo'>
-                            <img type='image/svg+xml' alt='Twitter Logo SVG' width='25' height='25' src='/public/style/svgs/twitter.svg'>
-                        </a>
-                        <div class='v-spacer-10'></div>
-                        <a target='_blank' href='https://github.com/EvanGrillo'>
-                            <p>Twitter</p>
-                        </a>
-                    </div>
-                    <div class='display-flex align-center'>
-                        <a target='_blank' href='https://github.com/EvanGrillo'>
-                            <img type='image/svg+xml' alt='Github Logo SVG' width='25' height='25' src='/public/style/svgs/mail.svg'>
-                        </a>
-                        <div class='v-spacer-10'></div>
-                        <a target='_blank' href='https://github.com/EvanGrillo'>
-                            <p>Mail</p>
-                        </a>
+        <!-- MODAL -->
+        <div id="modal">
+            <div class="modal-body">
+                <div class="modal-hd">
+                    <div class="display-flex align-center">
+                        <div class="grow-1"></div>
+                        <div class='close' onclick="document.getElementById('modal').style.display = 'none';">
+                            <img class='py-10 px-20' src='/public/style/svgs/close.svg' >
+                        </div>
                     </div>
                 </div>
-                
+                <div class="pa-20 modal-content card text-center">
+                    <h1>Write me a message</h1>
+                    <div class="spacer-30"></div>
+                    <textarea id='message' rows='3' class='pa-10 field' type="text" placeholder="Write message here..."></textarea>
+                    <div class="spacer-30"></div>
+                    <div class="display-flex justify-center">
+                        <div id='share' class="btn ml-10 display-flex justify-center align-center">Share</div>
+                    </div>
+                </div>
             </div>
-		</div>
+        </div>
+		<header>
+		</header>
+        <div class='container'>
+            <div class='inner-container'>
+                <div class='content'>
+                    <div class='blog-head'>Evan Grillo wrote...</div>
+                    <div class='blogs'>[blogs]</div>
+                </div>
+                <div class='side-bar'>
+                    <img class='ma-auto' alt='evan on vacation' width='100%' height='auto' src='/public/style/images/evan.png'>
+                    <p class='my-10'>Hello, I'm Evan. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                    <div class='spacer-20'></div>
+                    <div class='multi-container-el display-flex justify-space-around flex-wrap'>
+                        <a class='my-10 float-left display-flex align-center' target='_blank' href='https://github.com/EvanGrillo'>
+                            <img type='image/svg+xml' alt='Github Logo SVG' width='25' height='25' src='/public/style/svgs/github.svg'>
+                            <div class='v-spacer-10'></div>
+                            <p>Github</p>
+                        </a>
+                        <a class='my-10 float-left display-flex align-center' target='_blank' href='https://github.com/EvanGrillo'>
+                            <img type='image/svg+xml' alt='Twitter Logo SVG' width='25' height='25' src='/public/style/svgs/twitter.svg'>
+                            <div class='v-spacer-10'></div>
+                            <p>Twitter</p>
+                        </a>
+                        <a class='my-10 float-left display-flex align-center' href='#' onclick="document.getElementById('modal').style.display = 'block';">
+                            <img type='image/svg+xml' alt='Github Logo SVG' width='25' height='25' src='/public/style/svgs/mail.svg'>
+                            <div class='v-spacer-10'></div>
+                            <p>Email</p>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
     </body>
 </html>
