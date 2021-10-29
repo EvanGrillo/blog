@@ -55,7 +55,7 @@ readFile = (res, url) => {
         res.end(content, 'utf8');
 
     } catch (err) {
-        sendError(err);
+        sendError(res, err);
     }
 
 }
