@@ -35,12 +35,12 @@ server.on('request', (req, res) => {
     }
 
     if (method === 'POST' && (/send/).test(url)) return mailer.sendMessage(req, res);
-    
+
     readFile(res, url);
 
 });
 
-readFile = async (res, url) => {
+readFile = (res, url) => {
 
     let extname = path.extname(url);
     let contentType = mimeTypes[extname] || 'application/octet-stream';
@@ -108,7 +108,7 @@ renderBlog = async (res, url) => {
         .replace('[text]', blog.text)
         .replace('[createdDate]', blog.createdDate);
 
-        let content = 
+        let content =
         fs.readFileSync('./public/index.html', 'utf8')
         .replace('[blogs]', blogDisplay);
 
@@ -121,7 +121,7 @@ renderBlog = async (res, url) => {
 
 }
 
-sendError = async (res, err) => {
+sendError = (res, err) => {
 
     console.log("\x1b[31m", err, '>> sendError');
 

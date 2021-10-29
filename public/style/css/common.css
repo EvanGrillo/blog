@@ -164,6 +164,16 @@ p {
     margin: auto;
 }
 
+.my-auto {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .ma-0 {
     margin: 0 !important;
 }
@@ -237,4 +247,15 @@ p {
     padding-right: 0 !important;
 }
 
+.flex-600 {
+    flex-basis: 600px;
+}
+
+.flex-250 {
+    flex-basis: 250px;
+}
+
+.flex-500 {
+    flex-basis: 500px;
+}
 /*HELPERS*/
