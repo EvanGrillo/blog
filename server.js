@@ -11,13 +11,16 @@ connectToDB = async () => {
     try {
         await db.connect();
     } catch (err) {
-        console.log("\x1b[31m", err);
         throw err;
     }
 }
 connectToDB().then(() => {
     server.listen(port);
+}).catch((err) => {
+    console.log("\x1b[31m", err.message);
+    server.close();
 });
+
 
 server.on('request', (req, res) => {
 
@@ -25,7 +28,7 @@ server.on('request', (req, res) => {
 
     if ((/public/).test(url)) url = '.' + url;
 
-    if (url === '/') {
+    if (url === '/'|| url === '/blog') {
         url = './public/index.html';
         return renderBlogs(res, url);
     }
@@ -42,17 +45,17 @@ server.on('request', (req, res) => {
 
 readFile = (res, url) => {
 
-    let extname = path.extname(url);
-    let contentType = mimeTypes[extname] || 'application/octet-stream';
+    const extname = path.extname(url);
+    const contentType = mimeTypes[extname] || 'application/octet-stream';
 
     try {
 
         let content = fs.readFileSync(url);
         res.writeHead(200, { 'Content-Type': contentType });
-        return res.end(content, 'utf8');
+        res.end(content, 'utf8');
 
     } catch (err) {
-        return sendError(err);
+        sendError(err);
     }
 
 }

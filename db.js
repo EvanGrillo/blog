@@ -3,11 +3,11 @@ const uri = "mongodb://localhost:27017/";
 
 const mongoConnect = {
 	blogs: null,
-	connect: async () => {
-		try {
+    connect: async () => {
+	    try {
 			let dbo = await MongoClient.connect(uri);
             this.blogs = dbo.db('blog').collection('blogs');
-		} catch (err) {
+	    } catch (err) {
 			throw err;
 		}
 	},
