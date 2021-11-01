@@ -36,15 +36,22 @@ const auth = {
         });
 
     },
-    passwordMatch: (req, res) => {
+    passwordMatch: async (req, res) => {
 
-        let body = '';
+        try {
 
-        req.on('data', (chunk) => {
-            body += chunk.toString('utf8');
-        });
-
-        req.on('end', async () => {
+            let body = await new Promise((resolve, reject) => {
+                let body = '';
+                req.on('data', (chunk) => {
+                    body += chunk.toString('utf8');
+                });
+                req.on('end', () => {
+                    resolve(body);
+                });
+                req.on('err', (err) => {
+                    reject(err);
+                });
+            });
 
             body = JSON.parse(body);
             let user = await db.getUser_ByEmail(body.email);
@@ -60,12 +67,14 @@ const auth = {
             let editorHTML = fs.readFileSync('./public/templates/editor.html', 'utf8');
             editorHTML = editorHTML.toString('utf8');
             res.end(editorHTML);
-        
-            //- TODO handle session
-        });
+
+
+        } catch (err) {
+            console.log(err);
+            res.end('<h1>500 Internal Server Error</h1>');
+        }
 
     },
-    
 }
 
 module.exports = auth;
