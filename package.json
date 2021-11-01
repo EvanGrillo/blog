@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/EvanGrillo/blog#readme",
   "dependencies": {
+    "argon2": "^0.28.2",
     "dotenv": "^10.0.0",
     "mongodb": "^4.1.3",
     "nodemailer": "^6.7.0"
