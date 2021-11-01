@@ -1,4 +1,4 @@
-window.onload = (e) => {
+window.addEventListener('load', () => {
 
     document.querySelector('#share').addEventListener('click', () => {
 
@@ -30,4 +30,4 @@ window.onload = (e) => {
         xhttp.send(payload);
 
     });
-}
+});
