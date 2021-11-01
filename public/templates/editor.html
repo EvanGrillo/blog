@@ -1,0 +1,36 @@
+<head>
+    <link rel='stylesheet' href='../../public/style/css/index.css'/>
+    <link rel='stylesheet' href='../../public/style/css/editor.css'/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.60.0/codemirror.min.css" integrity="sha512-xIf9AdJauwKIVtrVRZ0i4nHP61Ogx9fSRAkCLecmE2dL/U8ioWpDvFCAy4dcfecN72HHB9+7FfQj3aiO68aaaw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.60.0/codemirror.min.js" integrity="sha512-hc0zo04EIwTzKLvp2eycDTeIUuvoGYYmFIjYx7DmfgQeZPC5N27sPG2wEQPq8d8fCTwuguLrI1ffatqxyTbHJw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.60.0/keymap/emacs.min.js" integrity="sha512-JfY2bFIZoAzACQZHMpW6Yh7sRGczZ4uKlBm0YONOD3L5la4+cqP3eqgmHkAw6XJ2nU2UFvWYlU+sw3xa6Tvicg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.60.0/mode/htmlmixed/htmlmixed.min.js" integrity="sha512-IC+qg9ITjo2CLFOTQcO6fBbvisTeJmiT5D5FnXsCptqY8t7/UxWhOorn2X+GHkoD1FNkyfnMJujt5PcB7qutyA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.60.0/mode/javascript/javascript.min.js" integrity="sha512-isTDQTpVc8nKKMQmhm0b6fccRPjzo2g0q6l2VLy9/jDn5s8bEUu9WuSGkkAfN/NCwI3+Qi5wEVCaPRoWvT6YPw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.60.0/addon/fold/xml-fold.min.js" integrity="sha512-UWevuuTs1/TWFZfIvCUtPfoiL4sIt14BmDftB8GAYEtT3DnYCwR1qqD9YQJw8ckcu/YV0zgE+IEIKsffcpYBGA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.60.0/mode/xml/xml.min.js" integrity="sha512-XPih7uxiYsO+igRn/NA2A56REKF3igCp5t0W1yYhddwHsk70rN1bbbMzYkxrvjQ6uk+W3m+qExHIJlFzE6m5eg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.60.0/mode/css/css.min.js" integrity="sha512-rsFXL+3jYau54xgkx2FtVPo+yRM4vLMEU9VBWl8hZX+t8MEYzGBHeHh5ELv04uthHqix7Dhw2o4KgQ1c+s6dEQ==" crossorigin="anonymous"></script>
+    <script src='../../public/scripts/editor.js'></script>
+</head>
+<body>
+    <div id='editors'>
+        <div class='editor' id='html_mixed'></div>
+        <div id='left' class='resize_bar_x'>
+            <h1>HTML</h1>
+        </div>
+        <div class='editor' id='js'></div>
+        <div id='middle' class='resize_bar_x'>
+            <h1>JS</h1>
+        </div>
+        <div class='editor' id='css'></div>
+        <div id='right' class='resize_bar_x'>
+            <h1>CSS</h1>
+        </div>
+    </div>
+    <div id='vertical' class='resize_bar_y'>
+    </div>
+    <button id='generate_page'>Generate Page with Code</button>
+    <iframe id='preview'>
+
+    </iframe>
+    
+</body>
