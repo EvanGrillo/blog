@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000;
 const mimeTypes = require('./mimeTypes');
 const db = require('./db.js');
 const mailer = require('./email.js');
+const auth = require('./auth.js');
 
 connectToDB = async () => {
     try {
@@ -35,6 +36,18 @@ server.on('request', (req, res) => {
 
     if ((/blog/.test(url)) && !(/style/).test(url)) {
         return renderBlog(res, `./public${url}`);
+    }
+
+    if ((/admin/).test(url) && method === 'GET') {
+        return auth.getGEOLocation(res);
+    }
+
+    if ((/authGEO/).test(url) && method === 'POST') {
+        return auth.validateGEO(req, res);
+    }
+
+    if ((/login/).test(url) && method === 'POST') {
+        return auth.passwordMatch(req, res);
     }
 
     if (method === 'POST' && (/send/).test(url)) return mailer.sendMessage(req, res);
@@ -69,7 +82,7 @@ renderBlogs = async (res, url) => {
         let blogs = await db.getBlogs();
 
         let blogPreviews = '';
-        let blogPreviewTemplate = fs.readFileSync('./public/templates/blogPreview.html', 'utf8');
+        let blogPreviewTemplate = fs.readFileSync('./public/templates/blogs/blogPreview.html', 'utf8');
 
         for (blog of blogs) {
 
@@ -104,7 +117,7 @@ renderBlog = async (res, url) => {
 
         let blog = await db.getBlog_ByHandle(handle);
 
-        let blogDisplayTemplate = fs.readFileSync('./public/templates/blogDisplay.html', 'utf8');
+        let blogDisplayTemplate = fs.readFileSync('./public/templates/blogs/blogDisplay.html', 'utf8');
 
         let blogDisplay = blogDisplayTemplate
         .replace('[title]', blog.title)
