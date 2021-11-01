@@ -43,6 +43,23 @@ module.exports = {
 
         });
         
+    },
+    sendGEO: async (body) => {
+
+        transporter.sendMail({
+            from: 'noreply@evangrillo.com',
+            to: RECIEVER,
+            subject: 'GEO-auth Visitor',
+            text: body
+        }, (err, info) => {
+
+            if (err) return console.log("\x1b[31m", err) && res.end(err);
+
+            console.log("\x1b[32m", 'Email sent: ' + info.response);
+            res.end();
+
+        });
+
     }
 }
   
