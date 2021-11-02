@@ -2,60 +2,58 @@ const fs = require('fs');
 const argon2 = require('argon2');
 const mailer = require('./email.js');
 const db = require('./db.js');
+const parseStream = require('./utils/parseStream.js');
+const sendError = require('./utils/sendError.js');
 
 const auth = {
     getGEOLocation: (res) => {
-        let getGeoTemplate = fs.readFileSync('./public/templates/auth/getGPSLocation.html', 'utf8');
-        getGeoTemplate.toString('utf8');
-        res.end(getGeoTemplate);
+        let adminLoginScript = fs.readFileSync('./public/scripts/adminLogin.js', 'utf8');
+        let modalTemplate = fs.readFileSync('./public/templates/modal/modal.html', 'utf8');
+        let loginSnippet = fs.readFileSync('./public/templates/modal/snippets/login.html', 'utf8');
+        
+        let adminLoginTemplate = modalTemplate
+        .replace('[script]', adminLoginScript)
+        .replace('[snippet]', loginSnippet);
+        
+        adminLoginTemplate.toString('utf8');
+
+        res.end(adminLoginTemplate);
     },
-    validateGEO: (req, res) => {
+    validateGEO: async (req, res) => {
 
-        let body = '';
+        try {
 
-        req.on('data', (chunk) => {
-            body += chunk.toString('utf8');
-        });
-
-        req.on('end', () => {
-
+            let body = await parseStream(req);
             if (!body) return res.end('<h1>403 Forbidden</h1>');
+            console.log('geo:', body);
 
-            //- TODO validate coords
+            // mailer.sendGEO(body);
 
-            try {
-                console.log('geo:', body);
-                mailer.sendGEO(body);
-                let editorHTML = fs.readFileSync('./public/templates/editor.html', 'utf8');
-                editorHTML = editorHTML.toString('utf8');
-                res.end(editorHTML);
-            } catch (err) {
-                res.end('<h1>500 Internal Server Error</h1>')
-            }
+            let editorHTML = fs.readFileSync('./public/templates/editor.html', 'utf8');
+            editorHTML = editorHTML.toString('utf8');
 
-        });
+            res.end(editorHTML);
+
+        } catch (err) {
+            sendError(res, err);
+        }
 
     },
     passwordMatch: async (req, res) => {
 
         try {
 
-            let body = await new Promise((resolve, reject) => {
-                let body = '';
-                req.on('data', (chunk) => {
-                    body += chunk.toString('utf8');
-                });
-                req.on('end', () => {
-                    resolve(body);
-                });
-                req.on('err', (err) => {
-                    reject(err);
-                });
-            });
+            let body = await parseStream(req);
+            if (!body) return res.end('<h1>403 Forbidden</h1>');
+            console.log('geo:', body);
 
             body = JSON.parse(body);
-            let user = await db.getUser_ByEmail(body.email);
-            if (!user) return res.end('<h1>User does not exist</h1>');
+            let user = await db.findOne('users', {'email': body.email});
+            if (!user) {
+                res.statusCode = 404;
+                res.statusMessage = `User ${body.email} Not Found`;
+                return res.end();
+            }
 
             let passwordMatch = await argon2.verify(user.password, body.password);
             if (!passwordMatch)  {
@@ -64,14 +62,16 @@ const auth = {
                 return res.end();
             }
 
-            let editorHTML = fs.readFileSync('./public/templates/editor.html', 'utf8');
-            editorHTML = editorHTML.toString('utf8');
+            let editorHTML = fs.readFileSync('./public/templates/editor.html', 'utf8').toString('utf8');
+            let editorJS = fs.readFileSync('./public/scripts/editor.js').toString();
+            editorHTML = editorHTML.replace('[editor_script]', editorJS);
+
             res.end(editorHTML);
 
 
         } catch (err) {
             console.log(err);
-            res.end('<h1>500 Internal Server Error</h1>');
+            sendError(res, err);
         }
 
     },
