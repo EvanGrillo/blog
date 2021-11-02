@@ -1,5 +1,9 @@
 window.addEventListener('load', () => {
 
+    document.querySelector('#closeModal').addEventListener('click', () => {
+        document.querySelector('#modal').style.display = 'none';
+    });
+
     document.querySelector('#share').addEventListener('click', () => {
 
         let payload = document.querySelector('#message').value;

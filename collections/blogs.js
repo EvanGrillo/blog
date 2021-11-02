@@ -12,20 +12,27 @@ const blogs = {
     
             let blogPreviews = '';
             let blogPreviewTemplate = fs.readFileSync('./public/templates/blogs/blogPreview.html', 'utf8');
-    
+
             for (blog of blogs) {
     
                 let entry = blogPreviewTemplate
                 .replace('[title]', blog.title)
                 .replaceAll('[titleLink]', blog.handle)
-                .replace('[createdDate]', blog.createdDate);
+                .replace('[createdDate]', blog.createdDate)
+                .replace('[inserts]', )
     
                 blogPreviews = blogPreviews.concat(entry);
             }
+
+            let modalTemplate = fs.readFileSync('./public/templates/modal/modal.html', 'utf8');
+            let writeMessageSnippet = fs.readFileSync('./public/templates/modal/snippets/writeMessage.html', 'utf8');
+            
+            modalTemplate = modalTemplate.replace('[snippet]', writeMessageSnippet);
     
             let content = 
             fs.readFileSync(url, 'utf8')
-            .replace('[blogs]', blogPreviews);
+            .replace('[blogs]', blogPreviews)
+            .replace('[inserts]', modalTemplate);
     
             return res.end(content, 'utf8');
     
@@ -51,10 +58,16 @@ const blogs = {
             .replace('[title]', blog.title)
             .replace('[text]', blog.text)
             .replace('[createdDate]', blog.createdDate);
+
+            let modalTemplate = fs.readFileSync('./public/templates/modal/modal.html', 'utf8');
+            let writeMessageSnippet = fs.readFileSync('./public/templates/modal/snippets/writeMessage.html', 'utf8');
+            
+            modalTemplate = modalTemplate.replace('[snippet]', writeMessageSnippet);
     
             let content =
             fs.readFileSync('./public/index.html', 'utf8')
-            .replace('[blogs]', blogDisplay);
+            .replace('[blogs]', blogDisplay)
+            .replace('[inserts]', modalTemplate);
     
             return res.end(content, 'utf8');
     

@@ -12,12 +12,11 @@ const auth = {
         let loginSnippet = fs.readFileSync('./public/templates/modal/snippets/login.html', 'utf8');
         
         let adminLoginTemplate = modalTemplate
-        .replace('[script]', adminLoginScript)
         .replace('[snippet]', loginSnippet);
         
         adminLoginTemplate.toString('utf8');
 
-        res.end(adminLoginTemplate);
+        res.end(`<script>${adminLoginScript}</script>` + adminLoginTemplate);
     },
     validateGEO: async (req, res) => {
 

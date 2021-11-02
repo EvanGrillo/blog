@@ -13,6 +13,8 @@ window.addEventListener('load', () => {
             password: document.querySelector('#password').value
         }
 
+        if (!payload.email.trim() || !payload.password.trim()) return alert('add some gibberish to those inputs');
+
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
