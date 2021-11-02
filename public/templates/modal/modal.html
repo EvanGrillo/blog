@@ -1,16 +1,24 @@
-<!-- MODAL -->
-<div id="modal">
-    <div class="modal-body">
-        <div class="modal-hd">
-            <div class="display-flex align-center">
-                <div class="grow-1"></div>
-                <div class='close' onclick="document.getElementById('modal').style.display = 'none';">
-                    <img class='py-10 px-20' src='/public/style/svgs/close.svg' >
+<head>
+    <link href='/public/style/css/index.css' rel='stylesheet'>
+    <link href='/public/style/css/common.css' rel='stylesheet'>
+    <script>
+        [script]
+    </script>
+</head>
+<body>
+    <div id="modal">
+        <div class="modal-body">
+            <div class="modal-hd">
+                <div class="display-flex align-center">
+                    <div class="grow-1"></div>
+                    <div id='closeModal' class='close'>
+                        <img class='py-10 px-20' src='/public/style/svgs/close.svg' >
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id='modal-content' class="pa-20 modal-content card text-center">
-            [snippet]
+            <div id='modal-content' class="pa-20 modal-content card text-center">
+                [snippet]
+            </div>
         </div>
     </div>
-</div>
+</body>
