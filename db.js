@@ -2,36 +2,33 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb://localhost:27017/";
 
 const mongoConnect = {
-	blogs: null,
-	users: null,
 	connect: async () => {
 		try {
 			let dbo = await MongoClient.connect(uri);
-			this.blogs = dbo.db('blog').collection('blogs');
-			this.users = dbo.db('blog').collection('users');
+			this.db = dbo.db('blog');
 		} catch (err) {
 			throw err;
 		}
 	},
-	getBlogs: async () => {
+	find: async (table, query) => {
+
+		let collection = this.db.collection(table);
+		if (!collection) throw new Error('collection does\'nt exist');
+
 		return await new Promise((resolve, reject) => {
-			this.blogs.find({}).toArray((err, result) => {
+			collection.find(query).toArray((err, result) => {
 				if (err) reject(err);
 				resolve(result);
 			});
 		});
 	},
-	getBlog_ByHandle: async (handle) => {
+	findOne: async (table, query) => {
+
+		let collection = this.db.collection(table);
+		if (!collection) throw new Error('collection does\'nt exist');
+
 		return await new Promise((resolve, reject) => {
-			this.blogs.findOne({handle: handle}, (err, result) => {
-				if (err) reject(err);
-				resolve(result);
-			});
-		});
-	},
-	getUser_ByEmail: async (email) => {
-		return await new Promise((resolve, reject) => {
-			this.users.findOne({email: email}, (err, result) => {
+			collection.findOne(query, (err, result) => {
 				if (err) reject(err);
 				resolve(result);
 			});
