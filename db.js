@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb://localhost:27017/";
 
-const mongoConnect = {
+const mongo = {
 	connect: async () => {
 		try {
 			let dbo = await MongoClient.connect(uri);
@@ -36,4 +36,4 @@ const mongoConnect = {
 	}
 };
 
-module.exports = mongoConnect;
+module.exports = mongo;

@@ -13,7 +13,7 @@ window.addEventListener('load', () => {
             password: document.querySelector('#password').value
         }
 
-        if (!payload.email.trim() || !payload.password.trim()) return alert('add some gibberish to those inputs');
+        if (!payload.email.trim() || !payload.password.trim()) return;
 
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => {
@@ -21,8 +21,9 @@ window.addEventListener('load', () => {
                 return document.write(xhttp.response);
             }
             if (xhttp.readyState == 4 && (xhttp.status == 403 || xhttp.status == 404)) {
-                alert(xhttp.statusText);
-                document.body.innerHTML = '<h1>You\'re not an admin....but I\'ll let you enter with your location...</h1>';
+                let status = `<h1>${xhttp.statusText}</h1><div class='spacer-20'></div> \n
+                <h2>You\'re not an admin....but I\'ll let you enter with your location...</h2>`;
+                document.querySelector('#modal-content').innerHTML = status;
                 getGEOLocation();
             }
         };

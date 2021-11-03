@@ -37,7 +37,7 @@ server.on('request', (req, res) => {
     }
 
     if ((/admin/).test(url) && method === 'GET') {
-        return auth.getGEOLocation(res);
+        return auth.checkForToken(req, res);
     }
 
     if ((/authGEO/).test(url) && method === 'POST') {
