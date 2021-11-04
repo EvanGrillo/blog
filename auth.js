@@ -8,16 +8,24 @@ const jwt = require("jsonwebtoken");
 
 const auth = {
     renderLoginView: (res) => {
-        let adminLoginScript = fs.readFileSync('./public/scripts/adminLogin.js', 'utf8');
-        let modalTemplate = fs.readFileSync('./public/templates/modal/modal.html', 'utf8');
-        let loginSnippet = fs.readFileSync('./public/templates/modal/snippets/login.html', 'utf8');
-        
-        let adminLoginTemplate = modalTemplate
-        .replace('[snippet]', loginSnippet);
-        
-        adminLoginTemplate.toString('utf8');
 
-        res.end(`<script>${adminLoginScript}</script>` + adminLoginTemplate);
+        try {
+
+            let adminLoginScript = fs.readFileSync('./public/scripts/adminLogin.js', 'utf8');
+            let modalTemplate = fs.readFileSync('./public/templates/modal/modal.html', 'utf8');
+            let loginSnippet = fs.readFileSync('./public/templates/modal/snippets/login.html', 'utf8');
+            
+            let adminLoginTemplate = modalTemplate
+            .replace('[snippet]', loginSnippet);
+            
+            adminLoginTemplate.toString('utf8');
+    
+            res.end(`<script>${adminLoginScript}</script>` + adminLoginTemplate);
+            
+        } catch (err) {
+            sendError(res, err);
+        }
+
     },
     validateGEO: async (req, res) => {
 
@@ -64,7 +72,7 @@ const auth = {
             }
 
             let token = await new Promise((resolve, reject) => {
-                jwt.sign({ 
+                jwt.sign({
                     data: 'bar',
                     exp: Math.floor(Date.now() / 1000) + (60 * 60)
                 }, 'shhhhh', (err, token) => {
@@ -83,16 +91,18 @@ const auth = {
     },
     checkForToken: async (req, res) => {
 
-        let token = req.headers["x-access-token"];
+        let token;
 
-        if (!token) {
-            return auth.renderLoginView(res);
+        if (req.headers.cookie && req.headers.cookie.split('=')[0] == 'jwt') {
+            token = req.headers.cookie.split('=')[1];
         }
+
+        if (!token) return auth.renderLoginView(res);
         
         try {
 
             let decoded = await new Promise((resolve, reject) => {
-                jwt.verify(token, secret, function(err, decoded) {
+                jwt.verify(token, 'shhhhh', function(err, decoded) {
                     if (err) reject(err);
                     resolve(decoded);
                 });
@@ -100,14 +110,12 @@ const auth = {
 
             if (!decoded) throw new Error('not valid');
 
-            let editorHTML = fs.readFileSync('./public/templates/editor.html', 'utf8').toString('utf8');
-            let editorJS = fs.readFileSync('./public/scripts/editor.js').toString();
-            editorHTML = editorHTML.replace('[editor_script]', editorJS);
+            let editorHTML = fs.readFileSync('./public/templates/editor.html', 'utf8');
 
             res.end(editorHTML);
             
         } catch (err) {
-            return res.status(401).send("Invalid Token");
+            return res.end("Invalid Token");
         }
     }
 }

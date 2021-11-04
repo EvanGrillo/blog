@@ -2,6 +2,12 @@ window.addEventListener('load', () => {
 
     document.querySelector('#modal').style.display = 'block';
 
+    document.querySelector('#modal').addEventListener('click', (e) => {
+        if (e.target.parentElement.tagName == 'BODY') {
+            window.location = '/';
+        }
+    });
+
     document.querySelector('#closeModal').addEventListener('click', () => {
         window.location = '/';
     });
@@ -18,7 +24,10 @@ window.addEventListener('load', () => {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
-                return document.write(xhttp.response);
+                var now = new Date();
+                now.setTime(now.getTime() + 1 * 3600 * 1000);
+                document.cookie = "jwt=" + xhttp.response + "; expires=" + now.toUTCString() + "; path=/";
+                window.location.reload();
             }
             if (xhttp.readyState == 4 && (xhttp.status == 403 || xhttp.status == 404)) {
                 let status = `<h1>${xhttp.statusText}</h1><div class='spacer-20'></div> \n

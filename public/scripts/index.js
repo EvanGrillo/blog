@@ -1,5 +1,11 @@
 window.addEventListener('load', () => {
 
+    document.querySelector('#modal').addEventListener('click', (e) => {
+        if (e.target.parentElement.tagName == 'BODY') {
+            document.querySelector('#modal').style.display = 'none';
+        }
+    });
+
     document.querySelector('#closeModal').addEventListener('click', () => {
         document.querySelector('#modal').style.display = 'none';
     });

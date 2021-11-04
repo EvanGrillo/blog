@@ -1,5 +1,5 @@
 window.addEventListener('load', () => {
-    alert('hello')
+    
     window.editors = {
         html_mixed: CodeMirror(document.querySelector('#html_mixed'), {
             indentWithTabs: true,
@@ -51,7 +51,7 @@ window.addEventListener('load', () => {
             css: window.editors.css.getValue()
         };
         document.getElementById('preview').srcdoc = 
-        "<style>" + body.css + "</style><script>" + body.js + "</script><body" + body.html + "</body";
+        `<style> ${body.css} </style><script> ${body.js} </script><body> ${body.html} </body>`;
     };
 
     var bar_left = document.querySelector('#left');
