@@ -7,28 +7,9 @@ const sendError = require('../utils/sendError.js');
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const SECRET = process.env.SECRET;
+const renderer = require('../middleware/renderer');
 
 const auth = {
-    renderLoginView: (res) => {
-
-        try {
-
-            let adminLoginScript = fs.readFileSync('./public/scripts/adminLogin.js', 'utf8');
-            let modalTemplate = fs.readFileSync('./public/templates/modal/modal.html', 'utf8');
-            let loginSnippet = fs.readFileSync('./public/templates/modal/snippets/login.html', 'utf8');
-            
-            let adminLoginTemplate = modalTemplate
-            .replace('[snippet]', loginSnippet);
-            
-            adminLoginTemplate.toString('utf8');
-    
-            res.end(`<script>${adminLoginScript}</script>` + adminLoginTemplate);
-            
-        } catch (err) {
-            sendError(res, err);
-        }
-
-    },
     validateGEO: async (req, res) => {
 
         try {
@@ -94,7 +75,7 @@ const auth = {
             token = req.headers.cookie.split('=')[1];
         }
 
-        if (!token) return auth.renderLoginView(res);
+        if (!token) return renderer.loginView(res);
         
         try {
 

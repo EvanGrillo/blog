@@ -83,7 +83,27 @@ const renderer = {
             sendError(res, err);
         }
     
-    }
+    },
+    loginView: (res) => {
+
+        try {
+
+            let adminLoginScript = fs.readFileSync('./public/scripts/adminLogin.js', 'utf8');
+            let modalTemplate = fs.readFileSync('./public/templates/modal/modal.html', 'utf8');
+            let loginSnippet = fs.readFileSync('./public/templates/modal/snippets/login.html', 'utf8');
+            
+            let adminLoginTemplate = modalTemplate
+            .replace('[snippet]', loginSnippet);
+            
+            adminLoginTemplate.toString('utf8');
+    
+            res.end(`<script>${adminLoginScript}</script>` + adminLoginTemplate);
+            
+        } catch (err) {
+            sendError(res, err);
+        }
+
+    },
 }
 
 module.exports = renderer;
