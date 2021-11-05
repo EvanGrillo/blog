@@ -24,9 +24,6 @@ window.addEventListener('load', () => {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
-                var now = new Date();
-                now.setTime(now.getTime() + 1 * 3600 * 1000);
-                document.cookie = "jwt=" + xhttp.response + "; expires=" + now.toUTCString() + "; path=/";
                 window.location.reload();
             }
             if (xhttp.readyState == 4 && (xhttp.status == 403 || xhttp.status == 404)) {
@@ -42,7 +39,6 @@ window.addEventListener('load', () => {
     });
 
     getGEOLocation = () => {
-        console.log('here');
 
         if (!'geolocation' in navigator) return document.body.innerHTML = '<h1>Your Browser doesn\'t support this feature.</h1>';
 
@@ -75,8 +71,8 @@ window.addEventListener('load', () => {
 
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => {
-            if (this.readyState == 4 && this.status == 200) {
-                document.write(this.response);
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                window.location.reload();
             }
         };
         xhttp.open('POST', 'authGEO', true);

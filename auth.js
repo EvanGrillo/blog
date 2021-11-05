@@ -5,6 +5,8 @@ const db = require('./db.js');
 const parseStream = require('./utils/parseStream.js');
 const sendError = require('./utils/sendError.js');
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
+const SECRET = process.env.SECRET;
 
 const auth = {
     renderLoginView: (res) => {
@@ -36,12 +38,16 @@ const auth = {
 
             console.log('geo:', body);
 
+            let payload = JSON.parse(body);
+
             // mailer.sendGEO(body);
 
-            // let editorHTML = fs.readFileSync('./public/templates/editor.html');
-            // editorHTML = editorHTML.toString('utf8');
+            let token = await auth.setToken(res, {
+                lat: payload.latitude,
+                lon: payload.longitude
+            });
 
-            // res.end(editorHTML);
+            return res.end(token);
 
         } catch (err) {
             sendError(res, err);
@@ -71,20 +77,11 @@ const auth = {
                 return res.end();
             }
 
-            let token = await new Promise((resolve, reject) => {
-                jwt.sign({
-                    data: 'bar',
-                    exp: Math.floor(Date.now() / 1000) + (60 * 60)
-                }, 'shhhhh', (err, token) => {
-                    if (err) reject(err);
-                    resolve(token);
-                });
-            });
-            
+            let token = await auth.setToken(res, {user: user.email});
+
             return res.end(token);
 
         } catch (err) {
-            console.log(err);
             sendError(res, err);
         }
 
@@ -93,7 +90,7 @@ const auth = {
 
         let token;
 
-        if (req.headers.cookie && req.headers.cookie.split('=')[0] == 'jwt') {
+        if (req.headers.cookie && (/access-token/).test(req.headers.cookie)) {
             token = req.headers.cookie.split('=')[1];
         }
 
@@ -102,7 +99,7 @@ const auth = {
         try {
 
             let decoded = await new Promise((resolve, reject) => {
-                jwt.verify(token, 'shhhhh', function(err, decoded) {
+                jwt.verify(token, SECRET, function(err, decoded) {
                     if (err) reject(err);
                     resolve(decoded);
                 });
@@ -115,7 +112,29 @@ const auth = {
             res.end(editorHTML);
             
         } catch (err) {
-            return res.end("Invalid Token");
+            return auth.renderLoginView(res);
+        }
+    },
+    setToken: async (res, dataObj) => {
+
+        try {
+
+            let token = await new Promise((resolve, reject) => {
+                jwt.sign({
+                    dataObj,
+                    exp: Math.floor(Date.now() / 1000) + (60 * 60)
+                }, SECRET, (err, token) => {
+                    if (err) reject(err);
+                    resolve(token);
+                });
+            });
+            
+            res.setHeader('Set-Cookie',`access-token=${token}; Max-Age=3600; Path=/admin; HttpOnly; Secure`);
+
+            return token;
+
+        } catch (err) {
+            throw err;
         }
     }
 }
