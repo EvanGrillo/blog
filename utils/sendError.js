@@ -5,7 +5,7 @@ sendError = (res, err) => {
     if (err.code == 'ENOENT' || 'EISDIR') {
         return res.end('<h1>403 Forbidden</h1>', 'utf-8');
     }
-    return res.end('<h1>500</h1>', 'utf-8');
+    res.end('<h1>500</h1>', 'utf-8');
 
 }
 

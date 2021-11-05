@@ -42,14 +42,3 @@
     height: 100%;
     min-height:300px;
 }
-
-#generate_page {
-    cursor: pointer;
-    display: block;
-    margin: 1em auto;
-    outline: none;
-    border: none;
-    border-radius: 8px;
-    background: #bdbdbd;
-    padding: 1em;
-}

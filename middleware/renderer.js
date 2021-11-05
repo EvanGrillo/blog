@@ -1,10 +1,10 @@
 const fs = require('fs');
-const db = require('../db.js');
+const db = require('./db.js');
 
-const blogs = {
-    renderBlogs: async (res, url) => {
+const renderer = {
+    homeView: async (req, res) => {
 
-        console.log("\x1b[32m", url, '>> RenderBlogs');
+        console.log("\x1b[32m", '>> RenderBlogs');
     
         try {
     
@@ -30,11 +30,15 @@ const blogs = {
             modalTemplate = modalTemplate.replace('[snippet]', writeMessageSnippet);
     
             let content = 
-            fs.readFileSync(url, 'utf8')
-            .replace('[blogs]', blogPreviews)
+            fs.readFileSync('./public/templates/home/index.html', 'utf8')
+            .replace('[blogs]', blogPreviews);
+
+            let index = fs.readFileSync('./public/index.html', 'utf8');
+            index = index
+            .replace('[inner_body]', content)
             .replace('[inserts]', modalTemplate);
     
-            return res.end(content, 'utf8');
+            return res.end(index, 'utf8');
     
         } catch (err) {
             console.log("\x1b[31m", err);
@@ -42,7 +46,7 @@ const blogs = {
         }
     
     },
-    renderBlog: async (res, url) => {
+    displayAsset: async (res, url) => {
     
         let handle = url.split('/')[3];
     
@@ -64,12 +68,15 @@ const blogs = {
             
             modalTemplate = modalTemplate.replace('[snippet]', writeMessageSnippet);
     
-            let content =
-            fs.readFileSync('./public/index.html', 'utf8')
-            .replace('[blogs]', blogDisplay)
+            let homePage =
+            fs.readFileSync('./public/templates/home/index.html', 'utf8')
+            .replace('[blogs]', blogDisplay);
+
+            let index = fs.readFileSync('./public/index.html', 'utf8');
+            index = index.replace('[inner_body]', homePage)
             .replace('[inserts]', modalTemplate);
     
-            return res.end(content, 'utf8');
+            return res.end(index, 'utf8');
     
         } catch (err) {
             console.log("\x1b[31m", err);
@@ -79,4 +86,4 @@ const blogs = {
     }
 }
 
-module.exports = blogs;
+module.exports = renderer;

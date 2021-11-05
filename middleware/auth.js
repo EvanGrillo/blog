@@ -2,8 +2,8 @@ const fs = require('fs');
 const argon2 = require('argon2');
 const mailer = require('./email.js');
 const db = require('./db.js');
-const parseStream = require('./utils/parseStream.js');
-const sendError = require('./utils/sendError.js');
+const parseStream = require('../utils/parseStream.js');
+const sendError = require('../utils/sendError.js');
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const SECRET = process.env.SECRET;
@@ -40,7 +40,7 @@ const auth = {
 
             let payload = JSON.parse(body);
 
-            // mailer.sendGEO(body);
+            // mailer.sendGEO(res, body);
 
             let token = await auth.setToken(res, {
                 lat: payload.latitude,

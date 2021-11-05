@@ -1,10 +1,10 @@
 const http = require('http');
 const server = http.createServer(() => {});
 const port = process.env.PORT || 3000;
-const db = require('./db.js');
-const mailer = require('./email.js');
-const auth = require('./auth.js');
-const blogs = require('./collections/blogs.js');
+const db = require('./middleware/db.js');
+const mailer = require('./middleware/email.js');
+const auth = require('./middleware/auth.js');
+const renderer = require('./middleware/renderer.js');
 const readFile = require('./utils/readFile.js');
 
 connectToDB = async () => {
@@ -28,12 +28,11 @@ server.on('request', (req, res) => {
     if ((/public/).test(url)) url = '.' + url;
 
     if (url === '/'|| url === '/blog') {
-        url = './public/index.html';
-        return blogs.renderBlogs(res, url);
+        return renderer.homeView(req, res);
     }
 
     if ((/blog/.test(url)) && !(/style/).test(url)) {
-        return blogs.renderBlog(res, `./public${url}`);
+        return renderer.displayAsset(res, `./public${url}`);
     }
 
     if ((/admin/).test(url) && method === 'GET') {
@@ -48,7 +47,9 @@ server.on('request', (req, res) => {
         return auth.passwordMatch(req, res);
     }
 
-    if (method === 'POST' && (/send/).test(url)) return mailer.sendMessage(req, res);
+    if ((/send/).test(url) && method === 'POST') {
+        return mailer.sendMessage(req, res);
+    }
 
     readFile(res, url);
 
