@@ -1,11 +1,17 @@
+const fs = require('fs');
+
 sendError = (res, err) => {
 
     console.log("\x1b[31m", err, '>> sendError');
 
-    if (err.code == 'ENOENT' || 'EISDIR') {
-        return res.end('<h1>403 Forbidden</h1>', 'utf-8');
-    }
-    res.end('<h1>500</h1>', 'utf-8');
+    let resCode = err.code || 500;
+    let resMsg = err.message || 'Error';
+
+    let index = fs.readFileSync('./public/index.html', 'utf8');
+    index = index
+    .replace('[inner_body]', `<h1>${resCode} ${resMsg}</h1>`)
+    .replace("<script src='/public/scripts/index.js'></script>", '');
+    res.end(index);
 
 }
 

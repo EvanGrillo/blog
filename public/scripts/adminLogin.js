@@ -3,7 +3,7 @@ window.addEventListener('load', () => {
     document.querySelector('#modal').style.display = 'block';
 
     document.querySelector('#modal').addEventListener('click', (e) => {
-        if (e.target.parentElement.tagName == 'BODY') {
+        if (e.target.parentElement.tagName == 'BODY' && document.activeElement == document.body) {
             window.location = '/';
         }
     });

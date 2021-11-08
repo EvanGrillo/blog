@@ -258,4 +258,10 @@ p {
 .flex-500 {
     flex-basis: 500px;
 }
+
+div[disabled], div[disabled]:hover  {
+    cursor: not-allowed;
+    opacity: .65;
+}
+
 /*HELPERS*/
