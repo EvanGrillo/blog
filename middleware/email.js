@@ -21,12 +21,27 @@ module.exports = {
         
         let body = await parseStream(req);
         if (!body) return res.end(`<h1>No message to send!</div>`);
+        
+        body = JSON.parse(body);
+
+        let formCheck_valueFails = [
+            !(body.msg || '').trim(),
+            !(body.name || '').trim(),
+            !(/\S+@\S+\.\S+/).test(body.email || '')
+        ];
+        if (formCheck_valueFails.includes(true)) return res.end(`<h1>Payload is incomplete</div>`);
+
+        let emailTemplate = fs.readFileSync('./public/templates/emails/message.html', 'utf8');
+        emailTemplate = emailTemplate
+        .replaceAll('[name]', body.name)
+        .replaceAll('[email]', body.email)
+        .replaceAll('[msg]', body.msg);
 
         transporter.sendMail({
             from: 'noreply@evangrillo.com',
             to: RECIEVER,
             subject: 'Message from your blog',
-            text: body
+            html: emailTemplate
         }, (err, info) => {
 
             if (err) return sendError(res, err);
@@ -39,12 +54,19 @@ module.exports = {
         });
         
     },
-    sendGEO: (res, body) => {
+    send: async (req, res, config) => {
+
+        let {
+            subject,
+            body
+        } = config;
+
+        if (!body) body = await parseStream(req);
 
         transporter.sendMail({
             from: 'noreply@evangrillo.com',
             to: RECIEVER,
-            subject: 'GEO-auth Visitor',
+            subject: subject,
             text: body
         }, (err, info) => {
 
@@ -55,7 +77,6 @@ module.exports = {
             res.end();
 
         });
-
     }
 }
   
