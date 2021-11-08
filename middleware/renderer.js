@@ -1,10 +1,10 @@
 const fs = require('fs');
 const db = require('./db.js');
 
-const renderer = {
+module.exports = {
     homeView: async (req, res) => {
 
-        console.log("\x1b[32m", '>> RenderBlogs');
+        console.log("\x1b[32m", '>> homeView');
     
         try {
     
@@ -18,8 +18,7 @@ const renderer = {
                 let entry = blogPreviewTemplate
                 .replace('[title]', blog.title)
                 .replaceAll('[titleLink]', blog.handle)
-                .replace('[createdDate]', blog.createdDate)
-                .replace('[inserts]', )
+                .replace('[createdDate]', blog.createdDate);
     
                 blogPreviews = blogPreviews.concat(entry);
             }
@@ -35,8 +34,8 @@ const renderer = {
 
             let index = fs.readFileSync('./public/index.html', 'utf8');
             index = index
-            .replace('[inner_body]', content)
-            .replace('[inserts]', modalTemplate);
+            .replace('[inner_body]', modalTemplate + content)
+            .replace('[inserts]', '');
     
             return res.end(index, 'utf8');
     
@@ -73,8 +72,7 @@ const renderer = {
             .replace('[blogs]', blogDisplay);
 
             let index = fs.readFileSync('./public/index.html', 'utf8');
-            index = index.replace('[inner_body]', homePage)
-            .replace('[inserts]', modalTemplate);
+            index = index.replace('[inner_body]', modalTemplate + homePage);
     
             return res.end(index, 'utf8');
     
@@ -105,5 +103,3 @@ const renderer = {
 
     },
 }
-
-module.exports = renderer;
