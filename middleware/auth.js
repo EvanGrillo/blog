@@ -7,7 +7,7 @@ const sendError = require('../utils/sendError.js');
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const SECRET = process.env.SECRET;
-const renderer = require('../middleware/renderer');
+const renderer = require('./renderer');
 
 const auth = {
     validateGEO: async (req, res) => {
@@ -21,7 +21,10 @@ const auth = {
 
             let payload = JSON.parse(body);
 
-            // mailer.sendGEO(res, body);
+            mailer.send(req, res, {
+                body: body,
+                subject: 'GEO-auth Visitor',
+            });
 
             let token = await auth.setToken(res, {
                 lat: payload.latitude,
@@ -41,7 +44,6 @@ const auth = {
 
             let body = await parseStream(req);
             if (!body) return res.end('<h1>403 Forbidden</h1>');
-            console.log('geo:', body);
 
             body = JSON.parse(body);
             let user = await db.findOne('users', {'email': body.email});
@@ -103,14 +105,14 @@ const auth = {
             let token = await new Promise((resolve, reject) => {
                 jwt.sign({
                     dataObj,
-                    exp: Math.floor(Date.now() / 1000) + (60 * 60)
+                    expiresIn: '2h'
                 }, SECRET, (err, token) => {
                     if (err) reject(err);
                     resolve(token);
                 });
             });
             
-            res.setHeader('Set-Cookie',`access-token=${token}; Max-Age=3600; Path=/admin; HttpOnly; Secure`);
+            res.setHeader('Set-Cookie',`access-token=${token}; Max-Age=7200; Path=/admin; HttpOnly; Secure`);
 
             return token;
 
