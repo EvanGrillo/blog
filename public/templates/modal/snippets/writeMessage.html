@@ -1,7 +1,13 @@
 <h1>Write me a message</h1>
-<div class="spacer-20"></div>
-<textarea id='message' rows='3' class='pa-10 field' type="text" placeholder="Write message here..."></textarea>
-<div class="spacer-20"></div>
-<div class="display-flex justify-center">
-    <div id='share' class="btn display-flex justify-center align-center">Share</div>
+<div class='spacer-20'></div>
+<div class='display-flex justify-center'>
+    <input id='name' class='pa-10 field' placeholder='Name' type='text'>
+    <div class='v-spacer-20'></div>
+    <input id='email' class='pa-10 field' placeholder='Email' type='text'>
+</div>
+<div class='spacer-20'></div>
+<textarea id='message' rows='3' class='pa-10 field' type='text' placeholder='Write message here...'></textarea>
+<div class='spacer-20'></div>
+<div class='display-flex justify-center'>
+    <div id='share' onclick='sendMsg()' class='btn display-flex justify-center align-center'>Share</div>
 </div>
