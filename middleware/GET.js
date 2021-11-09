@@ -1,6 +1,6 @@
-const auth = require('../auth.js');
-const renderer = require('../renderer.js');
-const readFile = require('../../utils/readFile.js');
+const auth = require('./auth.js');
+const renderer = require('./renderer.js');
+const readFile = require('../utils/readFile.js');
 
 module.exports = get = (req, res) => {
 

@@ -1,5 +1,6 @@
-const mailer = require('../email.js');
-const auth = require('../auth.js');
+const mailer = require('./email.js');
+const auth = require('./auth.js');
+const asset = require('./asset.js');
 
 module.exports = post = (req, res) => {
 

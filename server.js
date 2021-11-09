@@ -2,8 +2,8 @@ const http = require('http');
 const server = http.createServer(() => {});
 const port = process.env.PORT || 3000;
 const db = require('./middleware/db.js');
-const GET = require('./middleware/CRUD/GET.js');
-const POST = require('./middleware/CRUD/POST.js');
+const GET = require('./middleware/GET.js');
+const POST = require('./middleware/POST.js');
 
 connectToDB = async () => {
     try {
@@ -12,6 +12,7 @@ connectToDB = async () => {
         throw err;
     }
 }
+
 connectToDB().then(() => {
     server.listen(port);
 }).catch((err) => {
