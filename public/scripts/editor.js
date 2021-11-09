@@ -14,9 +14,9 @@ window.addEventListener('load', () => {
             foldGutter: true,
             lineNumbers: true,
             mode: 'javascript',
-            value: 'window.addEventListener("load", () => { \
-            \console.log("hello world"); \
-            })'
+            value: `window.addEventListener("load", () => {\
+            \n  console.log("hello world");\
+            \n\n});`
         }),
         css: CodeMirror(document.querySelector('#css'), {
             indentWithTabs: true,
@@ -24,11 +24,10 @@ window.addEventListener('load', () => {
             foldGutter: true,
             lineNumbers: true,
             mode: 'css',
-            value: '\
-            body { \
-                background: #ffffff; \
-                color: #000000; \
-            }'
+            value: `body {\
+                \n  background: #ffffff;\
+                \n  color: #000000;\
+            \n}`
         }),
     }
 
@@ -112,22 +111,22 @@ window.addEventListener('load', () => {
 
     document.getElementById('generate_page').addEventListener('click', (e) => {
         
-        let html = {
+        let code = {
             html: window.editors.html_mixed.getValue(),
             js: window.editors.js.getValue(),
             css: window.editors.css.getValue()
         }
 
-        const client = new XMLHttpRequest();
-        client.open("POST", `/api/html`);
-        client.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-        client.send(JSON.stringify(html));
-        client.onreadystatechange = (e) => {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = (e) => {
 
-            if (client.readyState === 4) {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                debugger
                 document.write(client.response);
             }
         }
+        xhttp.open('POST', '/create');
+        xhttp.send(JSON.stringify(code));
 
     }, false);
 

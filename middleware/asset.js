@@ -1,32 +1,35 @@
 const parseStream = require('../utils/parseStream.js');
 const db = require('./db.js');
 
-modules.export = {
-    createAsset: (req, res) => {
+const asset = {
+    createAsset: async (req, res) => {
 
         let body = await parseStream(req);
         if (!body) return res.end();
         
         body = JSON.parse(body);
 
-        let asset = await db.insertOne('assets', body);
-
-        /* 
+        await db.insertOne('assets', {
             _id: null,
             type: 'page',
             created: {
                 date: Date.now(),
-                by: User._id
+                by: 1
             },
             modified: {
                 date: Date.now(),
-                by: User._id
+                by: 1
             },
-            html: '',
-            css: '',
-            js: '',
+            html: body.html || '',
+            css: body.css || '',
+            js: body.js || '',
             version: 1,
             public: true
-        */
+        });
+
+        res.end();
+
     }
 }
+
+module.exports = asset;
