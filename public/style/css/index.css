@@ -153,6 +153,32 @@ input, textarea {
 textarea { min-width: 100%; }
 
 /* BUTTONS */
+
+.fab {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 0.25em;
+    color: #FFF;
+    background: #6200ee;
+    border-radius: 100%;
+    border: none;
+    outline: none;
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    transition: .3s;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+  
+.fab:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
     
 .btn {
     cursor: pointer;
