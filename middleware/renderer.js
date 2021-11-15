@@ -45,11 +45,31 @@ module.exports = {
         }
     
     },
+    loginView: (res) => {
+
+        try {
+
+            let adminLoginScript = fs.readFileSync('./public/scripts/adminLogin.js', 'utf8');
+            let modalTemplate = fs.readFileSync('./public/templates/modal/modal.html', 'utf8');
+            let loginSnippet = fs.readFileSync('./public/templates/modal/snippets/login.html', 'utf8');
+            
+            let adminLoginTemplate = modalTemplate
+            .replace('[snippet]', loginSnippet);
+            
+            adminLoginTemplate.toString('utf8');
+    
+            res.end(`<script>${adminLoginScript}</script>` + adminLoginTemplate);
+            
+        } catch (err) {
+            sendError(res, err);
+        }
+
+    },
     displayAsset: async (res, url) => {
     
         let handle = url.split('/')[3];
     
-        console.log("\x1b[32m", url, handle, '>> RenderBlog');
+        console.log("\x1b[32m", url, handle, '>> displayAsset');
     
         try {
     
@@ -82,24 +102,10 @@ module.exports = {
         }
     
     },
-    loginView: (res) => {
+    editorView: (res) => {
 
-        try {
+        let editorHTML = fs.readFileSync('./public/templates/editor.html', 'utf8');
+        res.end(editorHTML);
 
-            let adminLoginScript = fs.readFileSync('./public/scripts/adminLogin.js', 'utf8');
-            let modalTemplate = fs.readFileSync('./public/templates/modal/modal.html', 'utf8');
-            let loginSnippet = fs.readFileSync('./public/templates/modal/snippets/login.html', 'utf8');
-            
-            let adminLoginTemplate = modalTemplate
-            .replace('[snippet]', loginSnippet);
-            
-            adminLoginTemplate.toString('utf8');
-    
-            res.end(`<script>${adminLoginScript}</script>` + adminLoginTemplate);
-            
-        } catch (err) {
-            sendError(res, err);
-        }
-
-    },
+    }
 }

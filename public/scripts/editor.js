@@ -1,4 +1,29 @@
 window.addEventListener('load', () => {
+
+    let assetId = window.location.pathname.split('/')[2] || null;
+    if (assetId && assetId.length == 36) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = (e) => {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+                let page = JSON.parse(xhttp.response);
+                if (!page.html || !page.js || !page.css) return window.location = '/admin';
+
+                window.page = page;
+                window.editors.html_mixed.setValue(page.html);
+                window.editors.js.setValue(page.js);
+                window.editors.css.setValue(page.css);
+                insert_preview();
+
+            } else if (xhttp.readyState == 4 && xhttp.status == 404) {
+                return window.location = '/admin';
+            }
+        }
+        xhttp.open('GET', '/admin/getCode/' + assetId);
+        xhttp.send();
+    } else if (window.location.pathname !== '/admin') {
+        window.location = '/admin';
+    }
     
     window.editors = {
         html_mixed: CodeMirror(document.querySelector('#html_mixed'), {
@@ -121,7 +146,6 @@ window.addEventListener('load', () => {
         xhttp.onreadystatechange = (e) => {
 
             if (xhttp.readyState == 4 && xhttp.status == 200) {
-                debugger
                 document.write(client.response);
             }
         }

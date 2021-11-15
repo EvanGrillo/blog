@@ -90,12 +90,10 @@ const auth = {
 
             if (!decoded) throw new Error('not valid');
 
-            let editorHTML = fs.readFileSync('./public/templates/editor.html', 'utf8');
-
-            res.end(editorHTML);
+            return auth.routeAdminPath(req, res);
             
         } catch (err) {
-            return auth.renderLoginView(res);
+            return renderer.loginView(res);
         }
     },
     setToken: async (res, dataObj) => {
@@ -119,6 +117,31 @@ const auth = {
         } catch (err) {
             throw err;
         }
+    },
+    routeAdminPath: async (req, res) => {
+        
+        const { url } = req;
+
+        if ((/getCode/).test(url)) {
+
+            const pageId = url.split('/')[3];
+            
+            let page = await db.findOne('assets', {
+                _id: pageId,
+                type: 'page'
+            });
+
+            if (!page) return sendError(res, {
+                code: 404,
+                message: 'Not Found'
+            });
+
+            return res.end(JSON.stringify(page));
+
+        }
+
+        renderer.editorView(res);
+
     }
 }
 
