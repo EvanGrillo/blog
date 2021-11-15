@@ -7,6 +7,9 @@ sendError = (res, err) => {
     let resCode = err.code || 500;
     let resMsg = err.message || 'Error';
 
+    if (resCode == 'ENOENT') resCode = 404;
+    res.statusCode = resCode;
+
     let index = fs.readFileSync('./public/index.html', 'utf8');
     index = index
     .replace('[inner_body]', `<h1>${resCode} ${resMsg}</h1>`)
