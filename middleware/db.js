@@ -1,7 +1,11 @@
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb://localhost:27017/";
+const uri = 'mongodb://localhost:27017/';
+const crypto = require('crypto');
 
 module.exports = {
+	uuid: () => {
+		return crypto.randomUUID();
+	},
 	connect: async () => {
 		try {
 			let dbo = await MongoClient.connect(uri);

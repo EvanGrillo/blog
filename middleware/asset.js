@@ -10,7 +10,7 @@ const asset = {
         body = JSON.parse(body);
 
         await db.insertOne('assets', {
-            _id: null,
+            _id: db.uuid(),
             type: 'page',
             created: {
                 date: Date.now(),
